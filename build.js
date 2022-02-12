@@ -32,7 +32,49 @@ const generateEntryObject = () => ({
         faker.datatype.uuid(),
         faker.datatype.uuid(),
     ],
-    lastUpdated: faker.date.recent(),
+    lastUpdated: {
+        raw: faker.date.past(),
+        formatted: faker.date.past().toLocaleString(),
+        timestamp: faker.date.past().getTime(),
+    },
+    channel: {
+        id: faker.datatype.uuid(),
+        name: faker.name.findName(),
+        description: faker.lorem.sentence(),
+        status: faker.finance.transactionType(),
+    },
+    timestamps: [
+        {
+            raw: faker.date.past(),
+            formatted: faker.date.past().toLocaleString(),
+            timestamp: faker.date.past().getTime(),
+        },
+        {
+            raw: faker.date.past(),
+            formatted: faker.date.past().toLocaleString(),
+            timestamp: faker.date.past().getTime(),
+        },
+        {
+            raw: faker.date.past(),
+            formatted: faker.date.past().toLocaleString(),
+            timestamp: faker.date.past().getTime(),
+        },
+        {
+            raw: faker.date.past(),
+            formatted: faker.date.past().toLocaleString(),
+            timestamp: faker.date.past().getTime(),
+        },
+        {
+            raw: faker.date.past(),
+            formatted: faker.date.past().toLocaleString(),
+            timestamp: faker.date.past().getTime(),
+        },
+        {
+            raw: faker.date.past(),
+            formatted: faker.date.past().toLocaleString(),
+            timestamp: faker.date.past().getTime(),
+        },
+    ],
     text: faker.lorem.paragraph(),
     slug: faker.lorem.slug(),
     endpoint: faker.internet.url(),
