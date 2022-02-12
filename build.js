@@ -73,6 +73,10 @@ const generateEntryObject = () => ({
 })
 
 
+const startMarkerName = 'build-start'
+// const endMarkerName = 'build-end'
+
+
 const build = async () => {
 
     // 50k entries
@@ -113,8 +117,20 @@ const build = async () => {
     const files = await fs.readdir(entriesDirectory)
     console.log(`${ files.length } files written to ${ entriesDirectory }`)
 
+    // performance.mark( endMarkerName )
+    performance.measure( 'Build time', startMarkerName)
+
+    // Pull out all of the measurements.
+    for ( const entry of performance.getEntriesByType('measure') ) {
+        const entryDurationSeconds = (entry.duration / 1000).toFixed(2)
+        const durationPerFile = (entry.duration / files.length).toFixed(2)
+
+        console.log(`${ entry.name }: ${ entryDurationSeconds }s (${ durationPerFile }ms per file)`)
+    }
+    // console.log('Performance: ', performance.getEntriesByType('measure'))
 
     process.exit()
 }
 
+performance.mark( startMarkerName )
 build()
