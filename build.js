@@ -1,7 +1,39 @@
+// Netlify Deploys - https://app.netlify.com/sites/json-benchmark/deploys
+// Vercel Deploys
 import fs from 'fs-extra'
 import { faker } from '@faker-js/faker'
-import { performance } from 'perf_hooks'
+import { performance, PerformanceObserver } from 'perf_hooks'
 
+
+
+const entriesDirectory = 'dist/entry'
+
+// Sleep for a given number of milliseconds
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
+
+// Count number of entry files
+async function countEntryFiles () {
+    const files = await fs.readdir(entriesDirectory)
+    return files.length
+}
+
+
+const obs = new PerformanceObserver((items) => {
+
+    items.getEntries().forEach((entry) => {
+        // console.log(item.name, + ' ' + item.duration)
+
+        countEntryFiles()
+            .then( fileCount => {
+                const entryDurationSeconds = ( entry.duration / 1000 ).toFixed(2)
+                const durationPerFile = ( entry.duration / fileCount ).toFixed(2)
+
+                console.log(`${ entry.name }: ${ entryDurationSeconds }s (${ durationPerFile }ms per file)`)
+            })
+
+    })
+})
+obs.observe({entryTypes: ['measure']})
 
 
 const generateEntryObject = () => ({
@@ -124,7 +156,6 @@ const build = async () => {
 
     // 50k entries
     const numberOfEntries = 50_000
-    const entriesDirectory = 'dist/entry'
 
     const entries = new Set()
 
@@ -157,20 +188,14 @@ const build = async () => {
     await fs.writeFile( 'dist/index.json', JSON.stringify(Array.from(entries), null, 2))
 
     // Count files in directory
-    const files = await fs.readdir(entriesDirectory)
-    console.log(`${ files.length } files written to ${ entriesDirectory }`)
+    const fileCount = await countEntryFiles()
+    console.log(`${ fileCount } files written to ${ entriesDirectory }`)
 
     // performance.mark( endMarkerName )
-    performance.measure( 'Build time', startMarkerName)
+    performance.measure( 'Build time', startMarkerName )
 
-    // Pull out all of the measurements.
-    for ( const entry of performance.getEntriesByType('measure') ) {
-        const entryDurationSeconds = (entry.duration / 1000).toFixed(2)
-        const durationPerFile = (entry.duration / files.length).toFixed(2)
-
-        console.log(`${ entry.name }: ${ entryDurationSeconds }s (${ durationPerFile }ms per file)`)
-    }
-    // console.log('Performance: ', performance.getEntriesByType('measure'))
+    // Sleep to allow performance to report
+    await sleep(2_000)
 
     process.exit()
 }
