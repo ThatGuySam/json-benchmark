@@ -1,5 +1,5 @@
 // Netlify Deploys - https://app.netlify.com/sites/json-benchmark/deploys
-// Vercel Deploys
+// Vercel Deploys - https://vercel.com/samcarlton/json-benchmark/deployments
 import fs from 'fs-extra'
 // https://github.com/faker-js/faker
 import { faker } from '@faker-js/faker'
