@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "Benchmarks writing 50k JSON files",
   "main": "build.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node build.js",
+    "clear": "rm -rf ./dist/entry"
   },
   "repository": {
     "type": "git",
