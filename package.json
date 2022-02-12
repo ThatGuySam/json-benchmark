@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ThatGuySam/json-benchmark/issues"
   },
-  "homepage": "https://github.com/ThatGuySam/json-benchmark#readme"
+  "homepage": "https://github.com/ThatGuySam/json-benchmark#readme",
+  "dependencies": {
+    "fs-extra": "^10.0.0"
+  }
 }
