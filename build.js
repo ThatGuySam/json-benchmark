@@ -1,6 +1,7 @@
 // Netlify Deploys - https://app.netlify.com/sites/json-benchmark/deploys
 // Vercel Deploys
 import fs from 'fs-extra'
+// https://github.com/faker-js/faker
 import { faker } from '@faker-js/faker'
 import { performance, PerformanceObserver } from 'perf_hooks'
 
